@@ -32,6 +32,7 @@ java 后台基于 springboot+mysql+redis+jwt 实现。用于实现游戏查询�
 
 1. 修改`dockerDeploy/jar_start.sh`文件，配置邮件服务器、小程序 id、secrt 等参数
 2. 设置环境变量`MYSQL_PASS`,配置 mysql root 密码。
-3. 启动 docker-compose,进入 dockerDeploy 目录，运行：`docker-compose up -d`
+3. 打 jar 包，进入 service 目录，执行`mvn package`，需要 maven 环境。
+4. 启动 docker-compose,进入 dockerDeploy 目录，运行：`docker-compose up -d`
 
 **注意：**首次运行需要创建数据库 mysql，在 mysql 启动后连接数据库，手动创建数据库`psn`。
