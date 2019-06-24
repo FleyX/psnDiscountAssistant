@@ -1,0 +1,84 @@
+# 使用环境变量设置数据
+version: "2"
+services:
+  psn-mysql:
+    image: mysql:5.7.25
+    container_name: psn-mysql
+    ports:
+      - 3306:3306
+    networks:
+      - psn_net
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/temp:/var/lib/mysql-files
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - ./mysql:/opt/mysql
+      - /etc/localtime:/etc/localtime
+      - ./timezone:/etc/timezone
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASS}
+  psn-redis:
+    image: redis:3.2.10
+    container_name: psn-redis
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./timezone:/etc/timezone
+    networks:
+      - psn_net
+    ports:
+      - 6379:6379
+
+  psn-spider:
+    image: node:10.15.3-jessie
+    container_name: psn-spider
+    volumes:
+      - ../spider:/opt/spider
+      - /etc/localtime:/etc/localtime
+      - ./timezone:/etc/timezone
+    networks:
+      - psn_net
+    environment:
+      - MYSQL_PASS=${MYSQL_PASS}
+      - MYSQL_HOST=psn-mysql
+    working_dir: /opt/spider
+    depends_on:
+      - psn-mysql
+      - psn-back-service
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 20
+        npm install -g --registry=https://registry.npm.taobao.org typescript
+        npm install --registry=https://registry.npm.taobao.org
+        tsc
+        node dist/index.js
+  psn-back-service:
+    ports:
+      - 8085:8082
+    image: java:8u111-jre
+    container_name: psn-back-service
+    restart: always
+    depends_on:
+      - psn-mysql
+    networks:
+      - psn_net
+    volumes:
+      - ../back-service/target/psnBackService.jar:/opt/app/service.jar
+  #    - ./application.yml:/opt/app/config/application.yml
+      - ./jar_start.sh:/opt/app/start.sh
+      - /etc/localtime:/etc/localtime
+      - ./timezone:/etc/timezone
+    working_dir: /opt/app
+    environment:
+      - MYSQL_PASS=${MYSQL_PASS}
+    command:
+      - /bin/bash
+      - -c
+      - |
+        sleep 10
+        chmod +x ./start.sh
+        ./start.sh
+
+networks:
+  psn_net:

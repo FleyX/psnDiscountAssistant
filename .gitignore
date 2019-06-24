@@ -1,0 +1,21 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+docker/mysql/data/*
+!.gitkeep
+back-service/src/main/resources/application-dev.yml
+back-service/target/psnBackService.jar
+.vscode
+
+
+#php
+vendor

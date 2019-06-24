@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fanxb.backservice.dao.GameDao">
+
+    <sql id="listSql">
+        id, name, zhName, icon, language, type, currentPrice, cutPercent, plusPrice, plusCutPercent, originPrice, cutOverTime
+        , isLowest, psnScore, psnScoreNum
+    </sql>
+
+    <select id="getGameCount" resultType="int">
+        select count(id) from game a
+        <if test="!language.equals('全部语言')">
+            inner join language b on a.id=b.gameId
+        </if>
+        where a.serverId=#{serverId}
+        and a.platform = #{platform}
+        and a.valid = 1
+        <if test="!language.equals('全部语言')">
+            and b.language=#{language}
+        </if>
+        <if test="!type.equals('全部类别')">
+            and a.type=#{type}
+        </if>
+        <if test="isCut == 1">
+            and a.cutPercent>0
+        </if>
+        <if test="isCut == 2">
+            and a.isPlus = 1
+        </if>
+    </select>
+
+    <select id="getAttentionGameCount" resultType="int">
+        select count(id) from attention_price a inner join game b
+        on a.gameId=b.id
+        <if test="!language.equals('全部语言')">
+            inner join language c on b.id=c.gameId
+        </if>
+        where b.serverId=#{serverId} and b.platform=#{platform} and b.valid=1 and a.userId=#{userId}
+        <if test="!language.equals('全部语言')">
+            and c.language=#{language}
+        </if>
+        and b.platform = #{platform}
+    </select>
+
+    <select id="getGameList" parameterType="com.fanxb.backservice.entity.input.GameListParam"
+            resultType="com.fanxb.backservice.entity.Game">
+        select
+        <include refid="listSql"></include>
+        from
+        game a
+        <if test="!language.equals('全部语言')">
+            inner join language b on a.id=b.gameId
+        </if>
+        where a.serverId=#{serverId} and a.platform=#{platform}
+        and a.valid = 1
+        <if test="!language.equals('全部语言')">
+            and b.language = #{language}
+        </if>
+        <if test="isCut==1">
+            and a.cutPercent>0
+        </if>
+        <if test="isCut==2">
+            and a.isPlus=1
+        </if>
+        <if test="!type.equals('全部类别')">
+            and a.type=#{type}
+        </if>
+        order by a.${orderKey}
+        <if test="isAsc==1">
+            asc
+        </if>
+        <if test="isAsc==0">
+            desc
+        </if>
+        limit #{start},#{size}
+    </select>
+
+    <select id="getAttentionGameList" parameterType="com.fanxb.backservice.entity.input.GameListParam"
+            resultType="com.fanxb.backservice.entity.Game">
+        select b.* from attention_price a inner join game b on a.gameId=b.id
+        <if test="!param.language.equals('全部语言')">
+            inner join language c on b.id=c.gameId
+        </if>
+        where b.serverId=#{param.serverId} and b.platform=#{param.platform} and b.valid=1 and a.userId=#{userId}
+        <if test="!param.language.equals('全部语言')">
+            and c.language = #{param.language}
+        </if>
+        order by b.${param.orderKey}
+        <if test="param.isAsc==1">
+            asc
+        </if>
+        <if test="param.isAsc==0">
+            desc
+        </if>
+        limit #{param.start},#{param.size}
+    </select>
+
+    <select id="getGameDetail" resultType="game">
+        select *
+        from game
+        where id = #{id}
+    </select>
+
+    <select id="fullTextSearch" resultType="game">
+        select a.* from game a
+        <if test="!language.equals('全部语言')">
+            inner join language b on a.id = b.gameId
+        </if>
+        where match(`name`,`zhName`) against(#{searchStr} IN boolean MODE) and serverId=#{serverId} and
+        platform=#{platform}
+        <if test="!language.equals('全部语言')">
+            and b.language=#{language}
+        </if>
+        limit 0,10
+    </select>
+
+    <select id="getChildren" resultType="com.fanxb.backservice.entity.Game">
+        select
+            id,
+            serverId,
+            name,
+            icon
+        from game
+        where parentStoreId = #{storeId}
+    </select>
+
+    <update id="invalidGame">
+        update game
+        set valid = 0
+        where updateTime &lt; #{time}
+    </update>
+
+    <delete id="deleteByIdStr">
+        delete from game
+        where id in (${str})
+    </delete>
+
+</mapper>

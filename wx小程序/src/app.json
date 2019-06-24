@@ -1,0 +1,78 @@
+{
+  "pages": [
+    "pages/init/main",
+    "pages/index/main",
+    "pages/my/main",
+    "pages/index/detail/main",
+    "pages/my/myAttention/main",
+    "pages/my/about/main",
+    "pages/my/personInfo/main",
+    "pages/my/personInfo/editInfo/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999",
+    "backgroundColor": "#fafafa",
+    "selectedColor": "#333",
+    "borderStyle": "white",
+
+    "list": [{
+        "text": "游戏",
+        "pagePath": "pages/index/main",
+        "iconPath": "static/tabs/home.png",
+        "selectedIconPath": "static/tabs/home-active.png"
+      },
+      {
+        "text": "关于",
+        "pagePath": "pages/my/main",
+        "iconPath": "static/tabs/orders.png",
+        "selectedIconPath": "static/tabs/orders-active.png"
+      }
+    ],
+
+    "items": [{
+        "name": "游戏",
+        "pagePath": "pages/index/main",
+        "icon": "static/tabs/home.png",
+        "activeIcon": "static/tabs/home-active.png"
+      },
+      {
+        "name": "关于",
+        "pagePath": "pages/my/main",
+        "icon": "static/tabs/orders.png",
+        "activeIcon": "static/tabs/orders-active.png"
+      }
+    ],
+    "position": "bottom"
+  },
+  "navigateToMiniProgramAppIdList":[
+     "wx8abaf00ee8c3202e"
+  ],
+  "usingComponents": {
+    "van-button": "/static/vant/button/index",
+    "van-tab": "/static/vant/tab/index",
+    "van-tabs": "/static/vant/tabs/index",
+    "van-rate": "/static/vant/rate/index",
+    "van-tag": "/static/vant/tag/index",
+    "van-toast": "/static/vant/toast/index",
+    "van-popup": "/static/vant/popup/index",
+    "van-picker": "/static/vant/picker/index",
+    "van-search": "/static/vant/search/index",
+    "van-loading": "/static/vant/loading/index",
+    "van-radio-group": "/static/vant/radio-group/index",
+    "van-radio": "/static/vant/radio/index",
+    "van-field": "/static/vant/field/index",
+    "van-cell": "/static/vant/cell/index",
+    "van-cell-group": "/static/vant/cell-group/index",
+    "van-icon": "/static/vant/icon/index",
+    "van-collapse": "/static/vant/collapse/index",
+    "van-collapse-item": "/static/vant/collapse-item/index",
+    "van-notify": "/static/vant/notify/index",
+    "van-dialog":"/static/vant/dialog/index"
+  }
+}

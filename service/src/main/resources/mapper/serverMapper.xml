@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fanxb.backservice.dao.ServerDao">
+
+    <select id="getServerList" resultType="com.fanxb.backservice.entity.Server">
+        select * from server
+    </select>
+
+    <select id="getServerDetail" resultType="server">
+        select * from server where serverId=#{id}
+    </select>
+</mapper>

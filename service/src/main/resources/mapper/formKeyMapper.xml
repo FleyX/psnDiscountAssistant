@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fanxb.backservice.dao.FormKeyDao">
+
+
+    <insert id="insertMany">
+        insert into form_key(userId,value,expireTime) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.userId},#{item.value},#{item.expireTime})
+        </foreach>
+    </insert>
+
+    <select id="getByUserId" resultType="com.fanxb.backservice.entity.FormKey">
+        select
+            formKeyId,
+            value
+        from form_key
+        where userId = #{userId}
+        limit 0, 100
+    </select>
+
+    <delete id="deleteByFormKeyId">
+        delete from form_key
+        where formKeyId = #{formKeyId}
+    </delete>
+
+    <delete id="clearExpire">
+        delete from form_key
+        where expireTime &lt; #{time}
+    </delete>
+
+
+</mapper>

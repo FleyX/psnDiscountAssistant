@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fanxb.backservice.dao.UserDao">
+
+    <select id="getByUserId" parameterType="int" resultType="user">
+        select * from user where userId=#{userId};
+    </select>
+
+    <select id="getByOpenId" parameterType="string" resultType="user">
+        select * from user where openId=#{openId};
+    </select>
+
+    <insert id="addOne" parameterType="user" useGeneratedKeys="true" keyProperty="userId" keyColumn="userId">
+        insert into user(openId) value(#{openId})
+    </insert>
+
+    <update id="updateContactInfo">
+        update user set ${column}=#{value} where userId=#{userId}
+    </update>
+
+    <update id="updateLastLoginTime">
+        update user set lastLoginTime=#{timestamp} where userId=#{userId}
+    </update>
+
+
+</mapper>

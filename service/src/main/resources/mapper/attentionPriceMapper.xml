@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fanxb.backservice.dao.AttentionPriceDao">
+
+    <select id="getByGameId" resultType="com.fanxb.backservice.entity.AttentionPriceInfo">
+        select
+            a.gameId,
+            a.userId,
+            a.type,
+            a.value,
+            b.email,
+            b.openId,
+            c.name,
+            c.serverId,
+            c.rmbPrice,
+            c.currentPrice,
+            c.cutPercent,
+            c.isLowest
+        from attention_price a
+            inner join user b on a.userId = b.userId
+            inner join game c on a.gameId = c.id
+        where a.gameId = #{gameId}
+    </select>
+
+    <insert id="addOne" parameterType="attentionPrice">
+        insert into attention_price value (#{gameId}, #{userId}, #{type}, #{value}, #{createTime})
+    </insert>
+
+    <select id="isWatch" resultType="attentionPrice">
+        select
+            type,
+            value
+        from attention_price
+        where gameId = #{gameId} and userId = #{userId}
+    </select>
+
+    <delete id="deleteOne">
+        delete from attention_price
+        where gameId = #{gameId} and userId = #{userId}
+    </delete>
+
+    <delete id="deleteByGameIdStr">
+        delete from attention_price where gameId in (${str})
+    </delete>
+
+</mapper>
