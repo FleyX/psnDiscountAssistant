@@ -32,4 +32,4 @@ java 后台基于 springboot+mysql+redis+jwt 实现。用于实现游戏查询�
 2. 设置环境变量`MYSQL_PASS`,配置 mysql root 密码。
 3. 启动 docker-compose,进入 dockerDeploy 目录，运行：`docker-compose up -d`
 
-**注意：**首次运行需要创建数据库 mysql，在 mysql 启动后连接数据库，手动创建数据库`psn`。
+**注意：**首次运行需要创建数据库 mysql，在 mysql 启动后连接数据库，手动创建数据库`psn`，然后重启`docker-compose restart`。
