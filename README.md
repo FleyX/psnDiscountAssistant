@@ -10,6 +10,8 @@ PS4 商店的网络实在是太不友好了，速度极慢，再加上游戏检�
 
 ## 小程序
 
+**注意**：npm 中的 echart 体积过大，可以通过 echart 在线定制页面，自定义 echart,减小体积。
+
 没有使用原生开发，而是用一个 vue 的框架：[mpvue](http://mpvue.com/mpvue/).此框架性能相比原生会差一些，实际开发中偶尔会有列表页卡死，无法滑动的情况出现。
 
 http 请求库使用的[flyio](https://www.npmjs.com/package/flyio)
@@ -26,10 +28,10 @@ java 后台基于 springboot+mysql+redis+jwt 实现。用于实现游戏查询�
 
 # 部署
 
-已经集成 docker，部署很简单，配好参数就行了。
+后台已经集成 docker，部署很简单，配好参数就行了。
 
 1. 修改`dockerDeploy/jar_start.sh`文件，配置邮件服务器、小程序 id、secrt 等参数
 2. 设置环境变量`MYSQL_PASS`,配置 mysql root 密码。
 3. 启动 docker-compose,进入 dockerDeploy 目录，运行：`docker-compose up -d`
 
-**注意：**首次运行需要创建数据库 mysql，在 mysql 启动后连接数据库，手动创建数据库`psn`，然后重启`docker-compose restart`。
+**注意：**首次运行需要创建数据库 mysql，在 mysql 启动后连接数据库，手动创建数据库`psn`。
