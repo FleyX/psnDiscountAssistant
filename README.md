@@ -2,7 +2,7 @@
 
 ![二维码](https://raw.githubusercontent.com/FleyX/files/master/blogImg/20190430103928.png)
 
-# 为什么要这个
+# 为什么要做这个
 
 PS4 商店的网络实在是太不友好了，速度极慢，再加上游戏检索、折扣查看等功能并不太方便所以就做了这么一个小程序。每天定时从 ps4 商店获取最新的游戏价格，供大家查看，同时也可以设置折扣推送（通过邮件和微信通知).
 
@@ -35,4 +35,4 @@ java 后台基于 springboot+mysql+redis+jwt 实现。用于实现游戏查询�
 3. 打 jar 包，进入 service 目录，执行`mvn package`，需要 maven 环境。
 4. 启动 docker-compose,进入 dockerDeploy 目录，运行：`docker-compose up -d`
 
-**注意：**首次运行需要创建数据库 mysql，在 mysql 启动后连接数据库，手动创建数据库`psn`。然后重启应用`docker-compose restart`
+**注意：**首次运行需要创建数据库 `psn`，在 mysql 启动后连接数据库，手动创建数据库`psn`。然后重启应用`docker-compose restart`
